@@ -1,30 +1,38 @@
-# Personal Infrastructure Platform
+# Homelab
 
-This repository documents and automates my homelab platform. It is structured to show both the technical implementation and the architectural reasoning behind it so it can serve as a working infrastructure repo and a portfolio artifact.
+This directory contains the core homelab project structure used to document and automate the platform.
 
-The platform is currently built as a multi-stack Docker Compose environment. It mixes personal infrastructure, public-facing websites, private applications, media services, remote admin access, and development tooling.
+## Goals
 
-## Current Target Stack
+- Present a clear architecture for portfolio review
+- Keep implementation details organized by concern
+- Make future automation easy to add without restructuring the repo
 
-- Runtime: Docker Engine with many service-specific Compose projects
-- Public ingress: NGINX-based reverse proxy
-- Remote admin path: SSH bastion with Cloudflared
-- Public apps: portfolio site, business site, and personal sites
-- Private apps: Bitwarden, Jellyfin, Immich, Overseerr, and utility services
-- Platform tooling: `oc_mirror` and `openshift-airgap-architect`
-- Backup model: timestamped tarball snapshots of service roots and selected data volumes
+## Current Implementation Direction
 
-## Structure
+The current implementation is a service-oriented Docker Compose estate rather than a single monolithic stack. That is useful for a portfolio project because it shows:
 
-- `homelab/architecture/`: diagrams, design notes, and architecture decisions
-- `homelab/infrastructure/`: infrastructure-as-code and deployment automation
-- `homelab/services/`: service-level docs and implementation areas
-- `homelab/platform/`: shared platform capabilities like networking and security
-- `homelab/tooling/`: scripts, CI/CD, and automation helpers
-- `homelab/docs/`: operations, recovery, and scaling documentation
+- service isolation by project
+- public and private workload separation
+- backup discipline
+- admin access patterns
+- platform support for both apps and tooling
 
-## Next Steps
+## Real Environment Summary
 
-1. Capture the real host, storage, and domain layout for each Compose project.
-2. Add sanitized versions of the most representative Compose files to this repo.
-3. Translate recurring operational tasks like backups and deployment into Ansible or scripted automation.
+- `nginx`: public ingress and routing
+- `ssh_bastion`: bastion access with Cloudflared integration
+- `kyle.15kmr.com` and `fairwaypueblo.com`: public web properties
+- `bitwarden`, `immich`, `nimmich`, `jellyfin`, `overseerr`: self-hosted application services
+- `cookbook` and `dl_app`: smaller utility and personal apps
+- `oc_mirror` and `openshift-airgap-architect`: platform engineering and OpenShift support tooling
+- `backups/docker-compose/*`: timestamped application backups
+
+## Areas
+
+- `architecture/`: design, diagrams, and decisions
+- `infrastructure/`: Terraform, Ansible, Kubernetes, and Docker assets
+- `services/`: application and stack-specific work
+- `platform/`: cross-cutting platform capabilities
+- `tooling/`: scripts and delivery pipelines
+- `docs/`: operational documentation
