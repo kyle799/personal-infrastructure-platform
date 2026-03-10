@@ -1,0 +1,13 @@
+flowchart LR
+    Internet[Internet] --> Router[Edge Router]
+    Router --> DMZ[Public Ingress Path]
+    Router --> LAN[Private LAN]
+    DMZ --> Nginx[NGINX]
+    Admin[Cloudflared or SSH Access] --> Bastion[SSH Bastion]
+    LAN --> DockerHost[Docker Host]
+    Bastion --> DockerHost
+    Nginx --> PublicApps[Public Web Apps]
+    Nginx --> SelectedPrivate[Selective Private App Exposure]
+    DockerHost --> ComposeProjects[Multiple Compose Projects]
+    ComposeProjects --> DataDirs[Per-Service Root and Data Paths]
+    DataDirs --> Backups[backups/docker-compose timestamp sets]
